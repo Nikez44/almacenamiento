@@ -1,0 +1,14 @@
+#food{
+    font-family: sans-serif;
+    width: 90%;
+    border-collapse: collapse;
+    margin-left: 5%;
+}
+#food tr, #food td{
+    border: 1px solid #ffcece   ;
+}
+#food th{
+    background-color: #d55860;
+    color: white;
+    border: 1px solid white;
+}
