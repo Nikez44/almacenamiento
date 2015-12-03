@@ -4,7 +4,42 @@
 document.addEventListener("deviceready", initDatabase, false);
 
 function initDatabase() {
+
+  db = openDatabase('dpmaps', '1.0', 'BD de Mapas', 2 * 1024 * 1024);
+
+
+  db.transaction(function (tx) {
+    tx.executeSql('DROP TABLE IF EXISTS maps');
+    tx.executeSql('DROP TABLE IF EXISTS Markers');
+
+    tx.executeSql('CREATE TABLE IF NOT EXISTS maps (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+        'name VARCHAR(45), ' +
+        'latitud DOUBLE,' +
+        'longitud DOUBLE,' +
+        'zoom INTEGER)');
+
+    tx.executeSql('CREATE TABLE IF NOT EXISTS markers (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+        'title VARCHAR(45), ' +
+        'latitud DOUBLE,' +
+        'longitud DOUBLE,' +
+        'visited TINYINT(1),' +
+        'map_id INTEGER)');
+
+    tx.executeSql("INSERT INTO maps (name, latitud, longitud, zoom) VALUES ('hola', '3.57', '4.44', '10')");
+    tx.executeSql("INSERT INTO markers (title, latitud, longitud, visited, map_id) VALUES ('Lugar 1', '5.57', '10.44', '1', '1')");
+/*
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Maps (' +
+        'id INT NOT NULL PRIMARY KEY AUTOINCREMENT,' +
+        'name VARCHAR(50),' +
+        'latitud DOUBLE,' +
+        'longitud DOUBLE,' +
+        'zoom INT NULL,' +
+        'Markers_id INT,');*/
+ });
+
+/*
   db = openDatabase('mydb', '1.0', 'BD de comida', 2 * 1024 * 1024);
+
   var food = ["Cake", "Cookie", "Spaguetti", "Nachos"];
   var category = ["Dessert", "Dessert", "Main Course", "Entry"];
   db.transaction(function (tx) {
@@ -15,7 +50,7 @@ function initDatabase() {
       tx.executeSql("INSERT INTO food (food,category) VALUES ('"+food[i]+"','"+category[i]+"')");
     }
     doQuery();
-  });
+  });*/
 }
 
 function doQuery() {
